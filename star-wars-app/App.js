@@ -1,44 +1,32 @@
-import React from "react";
-import { View, StatusBar } from "react-native";
-import styles from "./styles";
-import Row from "./Row";
-import Column from "./Column";
-import Box from "./Box";
+import { NavigationContainer } from "@react-navigation/native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Platform } from "react-native";
+import Home from "./Home";
+import News from "./News";
+import Settings from "./Settings";
+
+const Tab = createBottomTabNavigator();
+const Drawer = createDrawerNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <StatusBar hidden={false} />
-      <Row>
-        <Column>
-          <Box>#1</Box>
-          <Box>#2</Box>
-        </Column>
-        <Column>
-          <Box>#3</Box>
-          <Box>#4</Box>
-        </Column>
-      </Row>
-      <Row>
-        <Column>
-          <Box>#5</Box>
-          <Box>#6</Box>
-        </Column>
-        <Column>
-          <Box>#7</Box>
-          <Box>#8</Box>
-        </Column>
-      </Row>
-      <Row>
-        <Column>
-          <Box>#9</Box>
-          <Box>#10</Box>
-        </Column>
-        <Column>
-          <Box>#11</Box>
-          <Box>#12</Box>
-        </Column>
-      </Row>
-    </View>
+    <NavigationContainer>
+      {Platform.OS === "ios" && (
+        <Tab.Navigator>
+          <Tab.Screen name="Home" component={Home} />
+          <Tab.Screen name="News" component={News} />
+          <Tab.Screen name="Settings" component={Settings} />
+        </Tab.Navigator>
+      )}
+
+      {Platform.OS == "android" && (
+        <Drawer.Navigator>
+          <Drawer.Screen name="Home" component={Home} />
+          <Drawer.Screen name="News" component={News} />
+          <Drawer.Screen name="Settings" component={Settings} />
+        </Drawer.Navigator>
+      )}
+    </NavigationContainer>
   );
 }
